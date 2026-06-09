@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Rekap Absensi Admin</title>
+    <style>
+        body { font-family: sans-serif; font-size: 12px; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+        th { background-color: #f2f2f2; }
+        .text-center { text-align: center; }
+        .header { text-align: center; margin-bottom: 20px; }
+        .footer { margin-top: 30px; text-align: right; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h2>REKAPITULASI ABSENSI SISWA</h2>
+        <p>Dicetak pada: {{ now()->format('d/m/Y H:i') }}</p>
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th>No</th>
+                <th>Tanggal</th>
+                <th>Kelas</th>
+                <th>Guru</th>
+                <th class="text-center">H</th>
+                <th class="text-center">I</th>
+                <th class="text-center">S</th>
+                <th class="text-center">A</th>
+                <th class="text-center">T</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach($attendances as $index => $attendance)
+                <tr>
+                    <td class="text-center">{{ $index + 1 }}</td>
+                    <td>{{ \Carbon\Carbon::parse($attendance->tanggal)->format('d/m/Y') }}</td>
+                    <td>{{ $attendance->kelas->nama_kelas }}</td>
+                    <td>{{ $attendance->guru->nama }}</td>
+                    <td class="text-center">{{ $attendance->details->where('status', 'hadir')->count() }}</td>
+                    <td class="text-center">{{ $attendance->details->where('status', 'izin')->count() }}</td>
+                    <td class="text-center">{{ $attendance->details->where('status', 'sakit')->count() }}</td>
+                    <td class="text-center">{{ $attendance->details->where('status', 'alfa')->count() }}</td>
+                    <td class="text-center">{{ $attendance->details->where('status', 'terlambat')->count() }}</td>
+                </tr>
+            @endforeach
+        </tbody>
+    </table>
+
+    <div class="footer">
+        <p>Administrator</p>
+        <br><br><br>
+        <p>( ____________________ )</p>
+    </div>
+</body>
+</html>

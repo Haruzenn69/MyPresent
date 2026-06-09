@@ -1,0 +1,1 @@
+<img x-bind:src="dark ? '{{ asset('logo_dark2.png') }}' : '{{ asset('logo_light2.png') }}'" src="{{ asset('logo_light2.png') }}" alt="Present" {{ $attributes->merge(['style' => 'object-fit: contain;']) }} />
